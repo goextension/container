@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/koala/container/contacts"
-	"github.com/koala/container/expression"
+	"github.com/golang-components/container/contacts"
+	"github.com/golang-components/container/expression"
 	"reflect"
 	"sync"
 	"unsafe"
@@ -110,7 +110,7 @@ func (container *Container) reflectionStruct(structName any) reflect.Type {
 	return reflect.TypeOf(structName)
 }
 
-func (container *Container) Instance() contacts.Container {
+func (container *Container) New() contacts.Container {
 
 	var once sync.Once
 
