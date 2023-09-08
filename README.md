@@ -2,7 +2,7 @@
 
 #### install
 ```shell
-$ go get gorarvel/container
+$ go get koala/container
 ```
 
 #### bind

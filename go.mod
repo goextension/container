@@ -1,3 +1,3 @@
-module github.com/gorarvel/container
+module github.com/koala/container
 
 go 1.21.0
