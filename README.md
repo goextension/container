@@ -2,7 +2,7 @@
 
 #### install
 ```shell
-$ go get koala/container
+$ go get xgbnl/container
 ```
 
 #### bind

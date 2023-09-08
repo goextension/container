@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/koala/container/contacts"
-	"github.com/koala/container/expression"
+	"github.com/xgbnl/container/contacts"
+	"github.com/xgbnl/container/expression"
 	"reflect"
 	"sync"
 	"unsafe"
