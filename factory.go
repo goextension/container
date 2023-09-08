@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/vendor/container/contacts"
+	"github.com/gopher/container/contacts"
 	"sync"
 )
 

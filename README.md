@@ -2,7 +2,7 @@
 
 #### install
 ```shell
-$ go get vendor/container
+$ go get gopher/container
 ```
 
 #### bind
