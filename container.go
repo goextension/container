@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/golang-components/container/contacts"
-	"github.com/golang-components/container/expression"
+	"github.com/vendor/container/contacts"
+	"github.com/vendor/container/expression"
 	"reflect"
 	"unsafe"
 )

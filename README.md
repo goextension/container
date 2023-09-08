@@ -2,7 +2,7 @@
 
 #### install
 ```shell
-$ go get golang-components/container
+$ go get vendor/container
 ```
 
 #### bind

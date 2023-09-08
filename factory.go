@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/golang-components/container/contacts"
+	"github.com/vendor/container/contacts"
 	"sync"
 )
 

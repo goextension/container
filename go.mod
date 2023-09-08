@@ -1,3 +1,3 @@
-module github.com/golang-components/container
+module github.com/vendor/container
 
 go 1.21.0
