@@ -1,9 +1,11 @@
 package container
 
 import (
-	`koala/container/contacts`
+	"koala/container/contacts"
+	"koala/container/expression"
 	"reflect"
 	"sync"
+	"unsafe"
 )
 
 type Container struct {
@@ -59,13 +61,15 @@ func (container *Container) Singleton(abstract any, closure contacts.Callable) {
 
 func (container *Container) register(abstract any, concrete contacts.Callable, shared bool) {
 
-	abstractStruct := container.guessAbstractName(abstract)
+	abstractName := container.guessAbstractName(abstract)
 
-	if shared {
-		container.singletons[abstractStruct] = concrete(container)
-	} else {
-		container.bindings[abstractStruct] = concrete(container)
-	}
+	property := expression.Ternary[string](shared, "singletons", "bindings")
+
+	reflector := reflect.ValueOf(container).Elem().FieldByName(property)
+
+	reflector = reflect.NewAt(reflector.Type(), unsafe.Pointer(reflector.UnsafeAddr())).Elem()
+
+	reflector.SetMapIndex(reflect.ValueOf(abstractName), reflect.ValueOf(concrete(container)))
 }
 
 func (container *Container) When(concrete []any) contacts.Context {
