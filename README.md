@@ -2,7 +2,7 @@
 
 #### install
 ```shell
-$ go get xgbnl/container
+$ go get gorarvel/container
 ```
 
 #### bind

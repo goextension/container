@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/xgbnl/container/contacts"
-	"github.com/xgbnl/container/expression"
+	"github.com/gorarvel/container/contacts"
+	"github.com/gorarvel/container/expression"
 	"reflect"
 	"sync"
 	"unsafe"
