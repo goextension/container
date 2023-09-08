@@ -1,6 +1,6 @@
 package container
 
-import `koala/container/contacts`
+import "github.com/koala/container/contacts"
 
 type ContextualBindingBuilder struct {
 	container contacts.Container
