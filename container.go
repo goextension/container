@@ -4,7 +4,6 @@ import (
 	"github.com/golang-components/container/contacts"
 	"github.com/golang-components/container/expression"
 	"reflect"
-	"sync"
 	"unsafe"
 )
 
@@ -15,11 +14,9 @@ type Container struct {
 
 	singletons map[string]any
 
-	aliases map[string]func()
+	aliases map[string]any
 
 	contextual map[string]map[string]any
-
-	instance *Container
 }
 
 func (container *Container) Make(abstract any, parameters []any) any {
@@ -108,24 +105,4 @@ func (container *Container) GetStructName(abstract any) string {
 
 func (container *Container) reflectionStruct(structName any) reflect.Type {
 	return reflect.TypeOf(structName)
-}
-
-func (container *Container) New() contacts.Container {
-
-	var once sync.Once
-
-	if container.instance == nil {
-		once.Do(func() {
-			container.instance = &Container{
-				resolved:   make(map[string]any),
-				bindings:   make(map[string]any),
-				singletons: make(map[string]any),
-				aliases:    make(map[string]func()),
-				contextual: make(map[string]map[string]any),
-			}
-		})
-
-	}
-
-	return container.instance
 }
