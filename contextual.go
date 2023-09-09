@@ -1,6 +1,6 @@
 package container
 
-import "github.com/gopher/container/contacts"
+import "github.com/golang-components/container/contacts"
 
 type ContextualBindingBuilder struct {
 	container contacts.Container

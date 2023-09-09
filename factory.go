@@ -1,7 +1,7 @@
 package container
 
 import (
-	"github.com/gopher/container/contacts"
+	"github.com/golang-components/container/contacts"
 	"sync"
 )
 

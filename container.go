@@ -1,8 +1,8 @@
 package container
 
 import (
-	"github.com/gopher/container/contacts"
-	"github.com/gopher/container/expression"
+	"github.com/golang-components/container/contacts"
+	"github.com/golang-components/container/expression"
 	"reflect"
 	"unsafe"
 )
