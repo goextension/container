@@ -22,13 +22,18 @@ type Container struct {
 
 func (container *Container) Make(abstract any, parameters []any) any {
 
-	concrete := pure.GetClass(abstract)
+	reflector := reflect.TypeOf(abstract)
 
-	if container.hasSingleton(concrete) {
-		return container.getConcrete(concrete)
+	if reflector.Kind() == reflect.String {
+
+		alias := pure.GetClass(abstract)
+
+		if container.hasSingleton(alias) {
+			return container.getConcrete(alias)
+		}
 	}
 
-	return container.build(concrete, parameters)
+	return container.build(reflector, parameters)
 }
 
 func (container *Container) hasSingleton(concrete string) bool {
@@ -42,7 +47,7 @@ func (container *Container) getConcrete(concrete string) any {
 	return container.resolved[concrete]
 }
 
-func (container *Container) build(abstract string, parameters []any) any {
+func (container *Container) build(reflector reflect.Type, parameters []any) any {
 
 	return ""
 }
