@@ -10,6 +10,4 @@ type Container interface {
 	When(concrete []any) Context
 
 	AddContextualBinding(concrete string, abstract string, implementation any)
-
-	GetStructName(abstract any) string
 }

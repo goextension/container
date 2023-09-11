@@ -3,6 +3,7 @@ package container
 import (
 	"github.com/golang-components/container/contacts"
 	"github.com/golang-components/container/expression"
+	"github.com/golang-components/container/pure"
 	"reflect"
 	"unsafe"
 )
@@ -21,15 +22,13 @@ type Container struct {
 
 func (container *Container) Make(abstract any, parameters []any) any {
 
-	reflector := container.reflectionStruct(abstract)
+	concrete := pure.GetClass(abstract)
 
-	structName := reflector.String()
-
-	if container.hasSingleton(structName) {
-		return container.getConcrete(structName)
+	if container.hasSingleton(concrete) {
+		return container.getConcrete(concrete)
 	}
 
-	return container.build(reflector, parameters)
+	return container.build(concrete, parameters)
 }
 
 func (container *Container) hasSingleton(concrete string) bool {
@@ -43,7 +42,7 @@ func (container *Container) getConcrete(concrete string) any {
 	return container.resolved[concrete]
 }
 
-func (container *Container) build(reflector reflect.Type, parameters []any) any {
+func (container *Container) build(abstract string, parameters []any) any {
 
 	return ""
 }
@@ -58,7 +57,7 @@ func (container *Container) Singleton(abstract any, closure contacts.Callable) {
 
 func (container *Container) register(abstract any, concrete contacts.Callable, shared bool) {
 
-	abstractName := container.guessAbstractName(abstract)
+	abstractName := pure.GetClass(abstract)
 
 	property := expression.Ternary[string](shared, "singletons", "bindings")
 
@@ -74,7 +73,7 @@ func (container *Container) When(concrete []any) contacts.Context {
 	var alias = make([]string, len(concrete))
 
 	for _, class := range concrete {
-		alias = append(alias, container.GetStructName(class))
+		alias = append(alias, pure.GetClass(class))
 	}
 
 	return &ContextualBindingBuilder{container: container, concrete: alias}
@@ -93,16 +92,4 @@ func (container *Container) getAlias(abstract string) any {
 	}
 
 	return alias
-}
-
-func (container *Container) guessAbstractName(abstract any) string {
-	return container.reflectionStruct(abstract).Elem().String()
-}
-
-func (container *Container) GetStructName(abstract any) string {
-	return container.reflectionStruct(abstract).String()
-}
-
-func (container *Container) reflectionStruct(structName any) reflect.Type {
-	return reflect.TypeOf(structName)
 }

@@ -2,5 +2,5 @@
 
 #### install
 ```shell
-$ go get golang-components/container
+go get -u github.com/golang-components/container
 ```

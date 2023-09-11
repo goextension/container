@@ -1,6 +1,9 @@
 package container
 
-import "github.com/golang-components/container/contacts"
+import (
+	"github.com/golang-components/container/contacts"
+	"github.com/golang-components/container/pure"
+)
 
 type ContextualBindingBuilder struct {
 	container contacts.Container
@@ -12,7 +15,7 @@ type ContextualBindingBuilder struct {
 
 func (context *ContextualBindingBuilder) Needs(abstract any) contacts.Context {
 
-	context.needs = context.container.GetStructName(abstract)
+	context.needs = pure.GetClass[any](abstract)
 
 	return context
 }
