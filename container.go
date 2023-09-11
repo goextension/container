@@ -20,13 +20,13 @@ type Container struct {
 	contextual map[string]map[string]any
 }
 
-func (container *Container) Make(abstract any, parameters []any) any {
+func (container *Container) Make(abstract any, parameters map[string]any) any {
 
 	reflector := reflect.TypeOf(abstract)
 
 	if reflector.Kind() == reflect.String {
 
-		alias := pure.GetClass(abstract)
+		alias := pure.GetAbstractName(abstract)
 
 		if container.hasSingleton(alias) {
 			return container.getConcrete(alias)
@@ -47,9 +47,26 @@ func (container *Container) getConcrete(concrete string) any {
 	return container.resolved[concrete]
 }
 
-func (container *Container) build(reflector reflect.Type, parameters []any) any {
+func (container *Container) build(reflector reflect.Type, parameters map[string]any) any {
+
+	if reflector.Kind() == reflect.Interface {
+
+		if !container.hasSingleton(reflector.Elem().String()) {
+			panic("Target[" + reflector.Elem().String() + "]is not instantiable.")
+		}
+
+		return container.getConcrete(reflector.Elem().String())
+	}
+
+	if reflector.NumField() == 0 {
+		return reflect.New(reflector)
+	}
 
 	return ""
+}
+
+func (container *Container) resolve() any {
+
 }
 
 func (container *Container) Bind(abstract any, concrete contacts.Callable) {
@@ -62,7 +79,7 @@ func (container *Container) Singleton(abstract any, closure contacts.Callable) {
 
 func (container *Container) register(abstract any, concrete contacts.Callable, shared bool) {
 
-	abstractName := pure.GetClass(abstract)
+	abstractName := pure.GetAbstractName(abstract)
 
 	property := expression.Ternary[string](shared, "singletons", "bindings")
 
@@ -78,7 +95,7 @@ func (container *Container) When(concrete []any) contacts.Context {
 	var alias = make([]string, len(concrete))
 
 	for _, class := range concrete {
-		alias = append(alias, pure.GetClass(class))
+		alias = append(alias, pure.GetAbstractName(class))
 	}
 
 	return &ContextualBindingBuilder{container: container, concrete: alias}

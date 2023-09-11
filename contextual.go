@@ -15,7 +15,7 @@ type ContextualBindingBuilder struct {
 
 func (context *ContextualBindingBuilder) Needs(abstract any) contacts.Context {
 
-	context.needs = pure.GetClass[any](abstract)
+	context.needs = pure.GetAbstractName[any](abstract)
 
 	return context
 }

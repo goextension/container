@@ -1,7 +1,7 @@
 package contacts
 
 type Container interface {
-	Make(abstract any, parameters []any) any
+	Make(abstract any, parameters map[string]any) any
 
 	Bind(abstract any, concrete Callable)
 

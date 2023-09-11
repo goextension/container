@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-func GetClass[T string | any](haystack T) string {
+func GetAbstractName[T string | any](haystack T) string {
 
 	var pointer any = &haystack
 
